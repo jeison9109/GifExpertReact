@@ -1,27 +1,24 @@
 import { useState } from 'react'
-import {AddCategory} from './components/AddCategory'
+import { AddCategory } from './components/AddCategory'
 import './App.css'
+import { GifGrid } from './components/GifGrid';
 
 export const App = () => {
-  const [categories, setCategories] = useState(['one puch', 'two puch', 'three puch'])
+  const [categories, setCategories] = useState(['one puch']);
 
-  const ondAddCategory =() => {
-    setCategories([...categories, 'For'])
+  const ondAddCategory = (newCategory) => {
+    if (categories.includes(newCategory)) return;
+    setCategories([newCategory, ...categories]);
   }
+
   return (
     <>
       <h1>GifExpertApp</h1>
-      <AddCategory setCategories={setCategories}/>
-      <button onClick={ondAddCategory}>Agregar</button>
-      <ol>
+      <AddCategory onNewCategory={ondAddCategory} />
         {
-        categories.map((category) => {
-          return <li key={category}>{category}</li>
-        })
+          categories.map((category) =>(<GifGrid key={category} category={category}/>)
+          )
         }
-        
-        
-      </ol>
     </>
   )
 }
